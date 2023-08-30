@@ -1,0 +1,25 @@
+@import '../../_variables.scss';
+
+.choose-quiz {
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    &__input {
+        margin: .5rem;
+        height: 40px;
+        width: 250px;
+    }
+
+    &__button {
+        background-color: $secondary-color;
+        border: none;
+        border-radius: 4px;
+        margin: .5rem;
+        height: 40px;
+        width: 250px;
+        font-size: 20px;
+    }
+}
