@@ -1,7 +1,7 @@
 import './Quiz.scss'
 
 function Quiz() {
-
+    
     return (
         <main>
             quiz

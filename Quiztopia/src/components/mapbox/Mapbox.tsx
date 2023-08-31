@@ -2,6 +2,7 @@ import './Mapbox.scss'
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useRef, useEffect, useState } from 'react';
 import mapboxgl, { Map as MapGl } from 'mapbox-gl';
+import AddQuestionComp from '../addQuestionComp/AddQuestionComp';
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FybG1iZXJnbWFuIiwiYSI6ImNsbHVyaDk2NDFoZ3YzcHB2aXd3dHFuZXkifQ.5wSZ2eJMGbIPBK1aNHFkQA'
 
 interface Props {
@@ -9,18 +10,22 @@ interface Props {
     lng: number;
     setLat: (lat: number) => void;
     setLng: (lng: number) => void;
+    quizName: string;
 }
 function Mapbox(props: Props) {
     const lat = props.lat
     const lng = props.lng
+    const quizName = props.quizName
     const mapContainer = useRef<HTMLDivElement>(null);
     const mapRef = useRef<MapGl | null>(null);
     const [zoom, setZoom] = useState<number>(13);
     const markerRef = useRef<mapboxgl.Marker | null>(null);
-    let questionRef = useRef<HTMLElement | null>(null)
+    const [clickLat, setClickLat] = useState<number>(0)
+    const [clickLng, setClickLng] = useState<number>(0)
+    const questionRef = useRef<mapboxgl.Marker | null>(null)
+    const [showQuestion, setShowQuestion] = useState<boolean>(false)
 
     useEffect(() => {
-        console.log(lat);
         
         if (mapRef.current || !mapContainer.current) return; // initialize map only once
         mapRef.current = new mapboxgl.Map({
@@ -48,21 +53,19 @@ function Mapbox(props: Props) {
                 setZoom(map.getZoom());
         });
         
-        questionRef = map.on('click', (e) => {
-            // const coord = JSON.stringify(e.lngLat.wrap());
-            console.log(e.lngLat.lat);
-            
+        map.on('click', (e) => {
+            setClickLat(e.lngLat.lat)
+            setClickLng(e.lngLat.lng)
+            setShowQuestion(current => !current)
+            questionRef.current = new mapboxgl.Marker().setLngLat([e.lngLat.lng, e.lngLat.lat]).addTo(map);
         })
       }, [lat, lng, zoom, props.setLat, props.setLng, setZoom]);
 
-    //   function handleClick(e: any) {
-    //     console.log(e);
-        
-    //   }
 
     return (
         <div>
             <div ref={mapContainer} className="map-container" />
+            {showQuestion && <AddQuestionComp quizName={ quizName } lat={ clickLat } lng={ clickLng }/>}
         </div>
     )
 }

@@ -2,11 +2,17 @@ import './AddQuestionComp.scss'
 import addQuestion from '../../api/addQuestion'
 import { useState } from 'react'
 
-function AddQuestionComp(props) {
-    const [question, setQuestion] = useState<string>()
-    const [anwser, setAnwser] = useState<string>()
+interface Props {
+    quizName: string,
+    lat: number,
+    lng: number
+}
+
+function AddQuestionComp(props: Props) {
+    const [question, setQuestion] = useState<string>('')
+    const [anwser, setAnwser] = useState<string>('')
     async function handleAddQuestion() {
-        addQuestion()
+        addQuestion(props.quizName, question, anwser, props.lat, props.lng)
     }
 
     return (
