@@ -5,6 +5,8 @@ import mapboxgl, { Map as MapGl } from 'mapbox-gl';
 import AddQuestionComp from '../addQuestionComp/AddQuestionComp';
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FybG1iZXJnbWFuIiwiYSI6ImNsbHVyaDk2NDFoZ3YzcHB2aXd3dHFuZXkifQ.5wSZ2eJMGbIPBK1aNHFkQA'
 
+// mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN as string
+
 interface Props {
     lat: number;
     lng: number;

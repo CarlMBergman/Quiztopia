@@ -1,5 +1,21 @@
 @import '../../_variables.scss';
 
 .create-quiz {
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &__img {
+        height: 50px;
+    }
+    &__name {
+        font-family: $secondary-font;
+        color: $secondary-color;
+    }
 }
