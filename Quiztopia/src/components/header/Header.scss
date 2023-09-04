@@ -1,3 +1,10 @@
+@import '../../_variables.scss';
+
 .header {
     justify-self: flex-start;
+    color: $main-color;
+}
+
+h1 {
+    font-family: $main-font;
 }

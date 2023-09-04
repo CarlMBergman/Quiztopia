@@ -2,7 +2,7 @@
 
 function geoLocation(setLat: any, setLng: any) {
     if('geolocation' in navigator){
-        navigator.geolocation.watchPosition((position: GeolocationPosition) =>{
+        navigator.geolocation.getCurrentPosition((position: GeolocationPosition) =>{
           const coords: GeolocationCoordinates = position.coords;
           setLat(coords.latitude)
           setLng(coords.longitude)

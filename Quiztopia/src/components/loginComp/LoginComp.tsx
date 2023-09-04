@@ -19,7 +19,7 @@ function LoginComp() {
         }
         
     }
-
+ 
     return (
         <article className='login-comp'>
                 <input type="text" placeholder='Username' className='login-comp__input' name='username' onChange={ e => setUsername(e.target.value) }/>

@@ -1,48 +1,78 @@
-import './Mapbox.scss'
+import './MapboxQuiz.scss'
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useRef, useEffect, useState } from 'react';
 import mapboxgl, { Map as MapGl } from 'mapbox-gl';
-import AddQuestionComp from '../addQuestionComp/AddQuestionComp';
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FybG1iZXJnbWFuIiwiYSI6ImNsbHVyaDk2NDFoZ3YzcHB2aXd3dHFuZXkifQ.5wSZ2eJMGbIPBK1aNHFkQA'
 
 interface Props {
+    quiz: Quiz;
     lat: number;
     lng: number;
     setLat: (lat: number) => void;
     setLng: (lng: number) => void;
-    quizName: string;
 }
 
-function Mapbox(props: Props) {
+interface Quiz {
+    questions: question[];
+    quizId: string;
+    userId: string;
+    username: string;
+}
+
+interface question {
+    answer: string;
+    question: string;
+    location: coords;
+}
+
+interface coords {
+    latitude: string;
+    longitude: string;
+}
+
+
+function MapboxQuiz(props: Props) {
     const lat = props.lat
     const lng = props.lng
-    const quizName = props.quizName
     const mapContainer = useRef<HTMLDivElement>(null);
     const mapRef = useRef<MapGl | null>(null);
     const [zoom, setZoom] = useState<number>(13);
     const markerRef = useRef<mapboxgl.Marker | null>(null);
-    const [clickLat, setClickLat] = useState<number>(0)
-    const [clickLng, setClickLng] = useState<number>(0)
     const questionRef = useRef<mapboxgl.Marker | null>(null)
 
     useEffect(() => {
-        
-        if (mapRef.current || !mapContainer.current) return; 
-        
-        mapRef.current = new mapboxgl.Map({
-          container: mapContainer.current,
-          style: 'mapbox://styles/mapbox/streets-v12',
-          center: [lng, lat],
-          zoom: zoom
-        });
 
-        const map: MapGl = mapRef.current
+        if (mapRef.current || !mapContainer.current) return; 
+
+        mapRef.current = new mapboxgl.Map({
+            container: mapContainer.current,
+            style: 'mapbox://styles/mapbox/streets-v12',
+            center: [lng, lat],
+            zoom: zoom
+          });
+
+          const map: MapGl = mapRef.current
 
         if (markerRef.current) {
             markerRef.current.remove();
           }
       
         markerRef.current = new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map);
+
+        props.quiz.questions.map((question) => {
+            const lat = +question.location.latitude
+            const lng = +question.location.longitude
+            
+            questionRef.current = new mapboxgl.Marker().setLngLat([lng, lat]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(
+                
+                `
+                <h3>${question.question}<h3>
+                <p>${question.answer}<p/>
+                `
+                )).addTo(map);
+        })
+
+
         map.on('move', () => {
             interface Position {
                 lng: number,
@@ -53,21 +83,14 @@ function Mapbox(props: Props) {
                 props.setLng(Number(position.lng.toFixed(4)));
                 setZoom(map.getZoom());
         });
-        
-        map.on('click', (e) => {
-            setClickLat(e.lngLat.lat)
-            setClickLng(e.lngLat.lng)
-            questionRef.current = new mapboxgl.Marker().setLngLat([e.lngLat.lng, e.lngLat.lat]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h3>hej<h3>')).addTo(map);
-        })
-      }, [lat, lng, zoom, props.setLat, props.setLng, setZoom]);
+    }, [lat, lng, zoom, props.setLat, props.setLng, setZoom])
+    
 
-      
     return (
         <div>
             {lat && lng && <div ref={mapContainer} className="map-container" /> }
-            <AddQuestionComp quizName={ quizName } lat={ clickLat } lng={ clickLng }/>
         </div>
     )
 }
 
-export default Mapbox
+export default MapboxQuiz

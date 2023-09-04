@@ -19,7 +19,7 @@ function CreateQuiz() {
 
    
     return (
-        <main>
+        <main className='create-quiz'>
             <h2>{ locationData.quizId }</h2>
             {lat && lng && <Mapbox lat={ lat } lng={ lng } setLat={ setLat } setLng={ setLng } quizName={ locationData.quizId }/>}
         </main>

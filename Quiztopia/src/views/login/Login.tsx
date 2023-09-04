@@ -21,7 +21,7 @@ function Login() {
         <main className='login'>
             {loginRegister ? <LoginComp/> : <RegisterComp/>}
             
-            <p onClick={ handleRegisterLoginSwap }>{ swapText }</p>
+            <p className='login__switch' onClick={ handleRegisterLoginSwap }>{ swapText }</p>
         </main>
     )
 }

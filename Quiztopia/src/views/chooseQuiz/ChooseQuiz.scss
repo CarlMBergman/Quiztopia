@@ -1,16 +1,25 @@
 @import '../../_variables.scss';
 
 .choose-quiz {
-    border: 1px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    border-radius: 15px;
+    padding: 1rem;
+    width: 80%;
+    height: 400px;
+    background-color: $main-color;
 
     &__input {
-        margin: .5rem;
+        background-color: white;
         height: 40px;
+        margin: .5rem;
+        border: none;
+        border-radius: 4px;
         width: 250px;
+        padding-left: 3px;
+        font-family: $main-font;
     }
 
     &__button {

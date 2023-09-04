@@ -5,9 +5,14 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    border: 1px solid black;
+    border-radius: 15px;
     padding: 1rem;
     width: 80%;
     height: 400px;
     background-color: $main-color;
+    &__switch {
+        font-family: $main-font;
+        color: white;
+        cursor: pointer;
+    }
 }

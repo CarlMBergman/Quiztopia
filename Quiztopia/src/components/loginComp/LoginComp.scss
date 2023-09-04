@@ -9,12 +9,15 @@
         background-color: white;
         height: 2rem;
         margin: .5rem;
-        border: 1px solid black;
+        border: none;
         border-radius: 4px;
         width: 170px;
+        padding-left: 3px;
+        font-family: $main-font;
     }  
     &__button {
         background-color: $secondary-color;
+        font-family: $main-font;
         border: none;
         border-radius: 4px;
         margin: .5rem;
