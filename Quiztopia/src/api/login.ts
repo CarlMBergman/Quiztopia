@@ -12,8 +12,11 @@ async function login(username: string, password: string) {
     const dataLogin = await response.json()
     console.log('login', dataLogin);
     localStorage.setItem('token', dataLogin.token)
+    localStorage.setItem('username', username)
     
     return dataLogin
 }
 
 export default login
+
+// 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InY3N…M0MH0.kk0hIM3f2flRjqRoaCmeznpPY5LPVvIKVd20mSiBDhc'
