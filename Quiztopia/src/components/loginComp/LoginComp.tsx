@@ -15,9 +15,13 @@ function LoginComp() {
         } else {
             const loginData = await login(username, password)
             console.log(loginData);
-            navigate('/choosequiz')
+            navigate('/choosequiz', { state: true })
         }
         
+    }
+
+    function handlePlayAsGuest() {
+        navigate('/choosequiz', { state: false })
     }
  
     return (
@@ -26,7 +30,7 @@ function LoginComp() {
                 <input type="text" placeholder='Password' className='login-comp__input' name='password' onChange={ e => setPassword(e.target.value)} />
                 <p>{ errorMsg }</p>
                 <button className='login-comp__button' onClick={ handleLogin }>Login</button>
-                <button className='login-comp__button'>Play as a guest</button>
+                <button className='login-comp__button' onClick={ handlePlayAsGuest }>Play as a guest</button>
         </article>
     )
 }

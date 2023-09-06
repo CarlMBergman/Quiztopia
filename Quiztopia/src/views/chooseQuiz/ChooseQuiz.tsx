@@ -1,10 +1,11 @@
 import './ChooseQuiz.scss'
 import newQuiz from '../../api/newQuiz'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import getAllQuiz from '../../api/getAllQuiz'
 
 import QuizListComp from '../../components/QuizListComp/QuizListComp'
+import { Quiz } from '../../interfaces'
 
 interface newQuizData {
     success: boolean;
@@ -12,37 +13,23 @@ interface newQuizData {
     message?: string;
 }
 
-interface QuizList {
-    questions: Question[];
-    quizId: string;
-    userId: string;
-    username: string;
-}
 
-interface Question {
-    question: string;
-    anwser: string;
-    location: Location;
-}
-
-interface Location {
-    latitude: string;
-    longitude: string;
-}
 
 function ChooseQuiz() {
     const navigate = useNavigate()
+    const location = useLocation()
     const [quizName, setQuizName] = useState<string>('')
     const [errorMsg, setErrorMsg] = useState<string | null>()
     const [showQuizes, setShowQuizes] = useState<boolean>(false)
     const [showMyQuizes, setShowMyQuizes] = useState<boolean>(false)
     const [allQuizes, setAllQuizes] = useState<any>()
+    const showLoginElems: boolean = location.state
 
     async function handleNewQuiz() {
         const newQuizData: newQuizData = await newQuiz(quizName)
         console.log(newQuizData);
         if (newQuizData.success) {
-            navigate('/createquiz', { state: newQuizData })
+            navigate('/createquiz', { state: newQuizData.quizId })
         } else {
             setErrorMsg(newQuizData.message)
         }
@@ -53,9 +40,12 @@ function ChooseQuiz() {
         const quizes = await getAllQuiz()
         // 
         console.log(quizes);
-        const anotherQuiz = quizes.quizzes.map((quiz: QuizList) => {
-            return <QuizListComp quiz={ quiz } own={ false }/>
+        const anotherQuiz = quizes.quizzes.map((quiz: Quiz) => {
+            const key = quiz.questions[0].location.latitude + quiz.questions[0].location.longitude + quiz.quizId + quiz.userId
+            return <QuizListComp quiz={ quiz } own={ false } key={key}/>
         })
+        console.log(quizes);
+        
         setShowMyQuizes(false)
         setShowQuizes(true)
         setAllQuizes(anotherQuiz)
@@ -63,19 +53,18 @@ function ChooseQuiz() {
 
     async function handleShowMyQuizes() {
         const quizes = await getAllQuiz()
-        // 
+        
         console.log(quizes);
         const username = localStorage.getItem('username')
-        const myQuizes = quizes.quizzes.filter((quiz: QuizList) => {
-            console.log(quiz);
-            
+        const myQuizes = quizes.quizzes.filter((quiz: Quiz) => {
             if (quiz.username === username) {
                 return quiz
             }
         })
         
-        const myQuizesShow = myQuizes.map((quiz: QuizList) => {
-            return <QuizListComp quiz={ quiz } own={ true } updateQuizzes={ handleShowMyQuizes }/>
+        const myQuizesShow = myQuizes.map((quiz: Quiz) => {
+            const key = quiz.questions[0].location.latitude + quiz.questions[0].location.longitude + quiz.quizId + quiz.userId
+            return <QuizListComp quiz={ quiz } own={ true } updateQuizzes={ handleShowMyQuizes } key={ key }/>
         })
         setShowQuizes(false)
         setShowMyQuizes(true)
@@ -85,18 +74,18 @@ function ChooseQuiz() {
     
     
     return (
-        <div>
+        <div className='to-center'>
         <main className='choose-quiz'>
-            <input type="text" placeholder='Name of your Quiz!' name='quizname' onChange={ e => setQuizName(e.target.value) } className='choose-quiz__input'/>
-            <button onClick={ handleNewQuiz } className='choose-quiz__button'>+ Create new Quiz</button>
+            { showLoginElems && <input type="text" placeholder='Name of your Quiz!' name='quizname' onChange={ e => setQuizName(e.target.value) } className='choose-quiz__input'/> }
+            { showLoginElems && <button onClick={ handleNewQuiz } className='choose-quiz__button'>+ Create new Quiz</button> }
             {errorMsg && <p>{ errorMsg }</p>}
             <button className='choose-quiz__button' onClick={ handleShowQuizes }>Check out existing Quizes!</button>
-            <button className='choose-quiz__button' onClick={ handleShowMyQuizes }>Check out my Quizes!</button>
-            
+            { showLoginElems && <button className='choose-quiz__button' onClick={ handleShowMyQuizes }>Check out my Quizes!</button> }
+            {showQuizes && <section className='choose-quiz__quiz-box'>{ allQuizes }</section>}
+            {showMyQuizes && <section className='choose-quiz__quiz-box'>{ allQuizes }</section>}
             
         </main>
-        {showQuizes && <section>{ allQuizes }</section>}
-            {showMyQuizes && <section>{ allQuizes }</section>}
+        
         </div>
     )
 }

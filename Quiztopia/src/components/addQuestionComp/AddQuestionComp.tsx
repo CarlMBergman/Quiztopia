@@ -1,14 +1,10 @@
 import './AddQuestionComp.scss'
 import addQuestion from '../../api/addQuestion'
 import { useState } from 'react'
+import { PropsAddQuestionComp } from '../../interfaces'
 
-interface Props {
-    quizName: string,
-    lat: number,
-    lng: number
-}
 
-function AddQuestionComp(props: Props) {
+function AddQuestionComp(props: PropsAddQuestionComp) {
     const [question, setQuestion] = useState<string>('')
     const [answer, setAnswer] = useState<string>('')
     const [errorMsg, setErrorMsg] = useState<string | null>()

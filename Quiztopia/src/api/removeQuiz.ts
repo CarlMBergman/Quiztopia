@@ -1,20 +1,4 @@
-interface Quiz {
-    questions: Question[];
-    quizId: string;
-    userId: string;
-    username: string;
-}
-
-interface Question {
-    question: string;
-    anwser: string;
-    location: Location;
-}
-
-interface Location {
-    latitude: string;
-    longitude: string;
-}
+import { Quiz } from "../interfaces"
 
 async function removeQuiz(quiz: Quiz) {
     const REMOVE_URL = `https://fk7zu3f4gj.execute-api.eu-north-1.amazonaws.com/quiz/${quiz.quizId}`

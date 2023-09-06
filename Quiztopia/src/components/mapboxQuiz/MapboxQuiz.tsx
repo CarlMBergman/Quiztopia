@@ -3,35 +3,12 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { useRef, useEffect, useState } from 'react';
 import mapboxgl, { Map as MapGl } from 'mapbox-gl';
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FybG1iZXJnbWFuIiwiYSI6ImNsbHVyaDk2NDFoZ3YzcHB2aXd3dHFuZXkifQ.5wSZ2eJMGbIPBK1aNHFkQA'
-
-interface Props {
-    quiz: Quiz;
-    lat: number;
-    lng: number;
-    setLat: (lat: number) => void;
-    setLng: (lng: number) => void;
-}
-
-interface Quiz {
-    questions: question[];
-    quizId: string;
-    userId: string;
-    username: string;
-}
-
-interface question {
-    answer: string;
-    question: string;
-    location: coords;
-}
-
-interface coords {
-    latitude: string;
-    longitude: string;
-}
+import { PropsForMapboxQuiz } from '../../interfaces';
 
 
-function MapboxQuiz(props: Props) {
+
+
+function MapboxQuiz(props: PropsForMapboxQuiz) {
     const lat = props.lat
     const lng = props.lng
     const mapContainer = useRef<HTMLDivElement>(null);
@@ -57,13 +34,13 @@ function MapboxQuiz(props: Props) {
             markerRef.current.remove();
           }
       
-        markerRef.current = new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map);
+        markerRef.current = new mapboxgl.Marker({color: '#7657cc'}).setLngLat([lng, lat]).addTo(map);
 
         props.quiz.questions.map((question) => {
             const lat = +question.location.latitude
             const lng = +question.location.longitude
             
-            questionRef.current = new mapboxgl.Marker().setLngLat([lng, lat]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(
+            questionRef.current = new mapboxgl.Marker({color: '#cc8257'}).setLngLat([lng, lat]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(
                 
                 `
                 <h3>${question.question}<h3>

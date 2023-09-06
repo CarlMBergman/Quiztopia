@@ -4,18 +4,12 @@ import { useRef, useEffect, useState } from 'react';
 import mapboxgl, { Map as MapGl } from 'mapbox-gl';
 import AddQuestionComp from '../addQuestionComp/AddQuestionComp';
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FybG1iZXJnbWFuIiwiYSI6ImNsbHVyaDk2NDFoZ3YzcHB2aXd3dHFuZXkifQ.5wSZ2eJMGbIPBK1aNHFkQA'
-
+import { PropsForMapbox } from '../../interfaces';
 // mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN as string
 
-interface Props {
-    lat: number;
-    lng: number;
-    setLat: (lat: number) => void;
-    setLng: (lng: number) => void;
-    quizName: string;
-}
 
-function Mapbox(props: Props) {
+
+function Mapbox(props: PropsForMapbox) {
     const lat = props.lat
     const lng = props.lng
     const quizName = props.quizName
@@ -42,9 +36,9 @@ function Mapbox(props: Props) {
 
         if (markerRef.current) {
             markerRef.current.remove();
-          }
+        }
       
-        markerRef.current = new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map);
+        markerRef.current = new mapboxgl.Marker({color: '#7657cc'}).setLngLat([lng, lat]).addTo(map);
         map.on('move', () => {
             interface Position {
                 lng: number,
@@ -59,7 +53,7 @@ function Mapbox(props: Props) {
         map.on('click', (e) => {
             setClickLat(e.lngLat.lat)
             setClickLng(e.lngLat.lng)
-            questionRef.current = new mapboxgl.Marker().setLngLat([e.lngLat.lng, e.lngLat.lat]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h3>hej<h3>')).addTo(map);
+            questionRef.current = new mapboxgl.Marker({color: '#cc8257'}).setLngLat([e.lngLat.lng, e.lngLat.lat]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h3>hej<h3>')).addTo(map);
         })
       }, [lat, lng, zoom, props.setLat, props.setLng, setZoom]);
 

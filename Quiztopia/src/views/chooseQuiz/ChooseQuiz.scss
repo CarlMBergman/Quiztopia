@@ -31,9 +31,27 @@
         width: 250px;
         font-size: 20px;
     }
+    &__quiz-box {
+        overflow: auto;
+        height: 200px;
+        width: 250px;
+        color: white;
+        border: 2px dotted $secondary-color;
+        border-radius: 5px;
+        padding: .5rem;
+        &::-webkit-scrollbar {
+            // width: 40px;
+            background-color: $secondary-color;
+            border-radius: 50px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: white;
+            border-radius: 50px;
+        }
+    }
 }
 
-div {
+.to-center {
     width: 100%;
     display: flex;
     justify-content: center;
