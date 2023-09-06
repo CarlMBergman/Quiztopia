@@ -5,6 +5,8 @@ import './Quiz.scss'
 import { useLocation } from 'react-router'
 import stars from '../../assets/stars.svg'
 import { Quiz } from '../../interfaces';
+import LogOut from '../../components/logOut/LogOut';
+import GoBack from '../../components/goBack/GoBack';
 
 
 
@@ -17,6 +19,9 @@ function Quiz() {
     
     
     return (
+        <>
+        <GoBack/>
+        <LogOut/>
         <main>
             <header className='header'>
                 <img src={stars} alt="" className='header__img'/>
@@ -25,6 +30,7 @@ function Quiz() {
             </header>
             {lat && lng && <MapboxQuiz quiz={ quiz } lat={ lat } lng={ lng } setLat={ setLat } setLng={ setLng }/>}
         </main>
+        </>
     )
 }
 

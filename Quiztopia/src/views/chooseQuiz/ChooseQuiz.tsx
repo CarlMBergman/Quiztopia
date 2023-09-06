@@ -3,6 +3,7 @@ import newQuiz from '../../api/newQuiz'
 import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import getAllQuiz from '../../api/getAllQuiz'
+import LogOut from '../../components/logOut/LogOut'
 
 import QuizListComp from '../../components/QuizListComp/QuizListComp'
 import { Quiz } from '../../interfaces'
@@ -23,7 +24,12 @@ function ChooseQuiz() {
     const [showQuizes, setShowQuizes] = useState<boolean>(false)
     const [showMyQuizes, setShowMyQuizes] = useState<boolean>(false)
     const [allQuizes, setAllQuizes] = useState<any>()
-    const showLoginElems: boolean = location.state
+    let showLoginElems: boolean = location.state
+    const token = localStorage.getItem('token')
+
+    if (token === '') {
+        showLoginElems = false
+    }
 
     async function handleNewQuiz() {
         const newQuizData: newQuizData = await newQuiz(quizName)
@@ -74,6 +80,8 @@ function ChooseQuiz() {
     
     
     return (
+        <>
+        <LogOut/>
         <div className='to-center'>
         <main className='choose-quiz'>
             { showLoginElems && <input type="text" placeholder='Name of your Quiz!' name='quizname' onChange={ e => setQuizName(e.target.value) } className='choose-quiz__input'/> }
@@ -87,6 +95,7 @@ function ChooseQuiz() {
         </main>
         
         </div>
+        </>
     )
 }
 

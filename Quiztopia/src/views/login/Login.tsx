@@ -7,6 +7,8 @@ import { useState } from 'react'
 function Login() {
     const [loginRegister, setLoginRegister] = useState<boolean>(true)
     const [swapText, setSwapText] = useState<string>('Not a user? Register here!')
+    localStorage.setItem('token', '')
+    localStorage.setItem('username', '')
 
     function handleRegisterLoginSwap() {
         setLoginRegister(current => !current)

@@ -2,7 +2,7 @@ import './MapboxQuiz.scss'
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useRef, useEffect, useState } from 'react';
 import mapboxgl, { Map as MapGl } from 'mapbox-gl';
-mapboxgl.accessToken = 'pk.eyJ1IjoiY2FybG1iZXJnbWFuIiwiYSI6ImNsbHVyaDk2NDFoZ3YzcHB2aXd3dHFuZXkifQ.5wSZ2eJMGbIPBK1aNHFkQA'
+mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN_KEY as string
 import { PropsForMapboxQuiz } from '../../interfaces';
 
 
@@ -43,8 +43,16 @@ function MapboxQuiz(props: PropsForMapboxQuiz) {
             questionRef.current = new mapboxgl.Marker({color: '#cc8257'}).setLngLat([lng, lat]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(
                 
                 `
-                <h3>${question.question}<h3>
-                <p>${question.answer}<p/>
+                <div className='scene'>
+                    <div className='card'>
+                        <div className='card__face card__question'>
+                            <h3>${question.question}<h3>
+                        </div>
+                        <div className='card__face card__anwser'>
+                            <p>${question.answer}<p/>
+                        </div>
+                    </div>
+                </div>
                 `
                 )).addTo(map);
         })

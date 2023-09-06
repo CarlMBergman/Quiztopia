@@ -4,6 +4,8 @@ import { useLocation } from 'react-router-dom'
 import Mapbox from '../../components/mapbox/Mapbox';
 import geoLocation from '../../functions/geoLocation';
 import stars from '../../assets/stars.svg'
+import LogOut from '../../components/logOut/LogOut';
+import GoBack from '../../components/goBack/GoBack';
 
 
 
@@ -17,6 +19,9 @@ function CreateQuiz() {
     
    
     return (
+        <>
+        <GoBack/>
+        <LogOut/>
         <main className='create-quiz'>
             <header className='header'>
                 <img src={stars} alt="" className='header__img'/>
@@ -26,6 +31,7 @@ function CreateQuiz() {
             
             {lat && lng && <Mapbox lat={ lat } lng={ lng } setLat={ setLat } setLng={ setLng } quizName={ locationData }/>}
         </main>
+        </>
     )
 } 
 

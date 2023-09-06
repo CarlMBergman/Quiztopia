@@ -3,9 +3,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { useRef, useEffect, useState } from 'react';
 import mapboxgl, { Map as MapGl } from 'mapbox-gl';
 import AddQuestionComp from '../addQuestionComp/AddQuestionComp';
-mapboxgl.accessToken = 'pk.eyJ1IjoiY2FybG1iZXJnbWFuIiwiYSI6ImNsbHVyaDk2NDFoZ3YzcHB2aXd3dHFuZXkifQ.5wSZ2eJMGbIPBK1aNHFkQA'
 import { PropsForMapbox } from '../../interfaces';
-// mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN as string
+mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN_KEY as string
 
 
 
