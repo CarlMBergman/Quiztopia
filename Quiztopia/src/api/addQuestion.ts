@@ -1,3 +1,4 @@
+import { AddQuestionData } from "../interfaces"
 
 
 async function addQuestion(quizName: string, question: string, answer: string, lat: number, lng: number) {
@@ -24,7 +25,8 @@ async function addQuestion(quizName: string, question: string, answer: string, l
             }
         })
     })
-    const data = await response.json()
+    const data: AddQuestionData = await response.json()
+    
     return data
 }
 

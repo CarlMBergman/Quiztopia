@@ -24,6 +24,7 @@ interface PropsAddQuestionComp {
     quizName: string;
     lat: number;
     lng: number;
+    setCurrentQuestions: (question: Question[]) => void;
 }
 
 interface PropsForMapbox {
@@ -48,4 +49,21 @@ interface Login {
     message?: string;
 }
 
-export { Quiz, PropsAddQuestionComp, PropsForMapbox, PropsForMapboxQuiz, QuizArray }
+interface AddQuestionData {
+    success: boolean;
+    quiz?: AddQuestionDataQuiz;
+    message?: string;
+}
+
+interface AddQuestionDataQuiz {
+    Attributes: AttributesAdd
+}
+
+interface AttributesAdd {
+    questions: Question[];
+    quizId: string;
+    userId: string;
+    username: string;
+}
+
+export { Quiz, PropsAddQuestionComp, PropsForMapbox, PropsForMapboxQuiz, QuizArray, Question, AddQuestionData }

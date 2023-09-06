@@ -16,7 +16,10 @@ function AddQuestionComp(props: PropsAddQuestionComp) {
         } else if (answer === '') {
             setErrorMsg('Give us an answer!')
         } else {
-            addQuestion(props.quizName, question, answer, props.lat, props.lng)
+            const data = await addQuestion(props.quizName, question, answer, props.lat, props.lng)
+            console.log(data);
+            if (!data.quiz) return
+            props.setCurrentQuestions(data.quiz.Attributes.questions)
             setQuestion('')
             setAnswer('')
             setErrorMsg(null)

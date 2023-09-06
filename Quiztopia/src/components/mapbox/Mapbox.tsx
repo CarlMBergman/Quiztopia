@@ -3,8 +3,9 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { useRef, useEffect, useState } from 'react';
 import mapboxgl, { Map as MapGl } from 'mapbox-gl';
 import AddQuestionComp from '../addQuestionComp/AddQuestionComp';
-import { PropsForMapbox } from '../../interfaces';
+import { PropsForMapbox, Question } from '../../interfaces';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN_KEY as string
+// import getOneQuiz from '../../api/getOneQuiz';
 
 
 
@@ -18,7 +19,11 @@ function Mapbox(props: PropsForMapbox) {
     const markerRef = useRef<mapboxgl.Marker | null>(null);
     const [clickLat, setClickLat] = useState<number>(0)
     const [clickLng, setClickLng] = useState<number>(0)
+    const [currentQuestions, setCurrentQuestions] = useState<Question[]>()
     const questionRef = useRef<mapboxgl.Marker | null>(null)
+    const activeQuestionRef = useRef<mapboxgl.Marker | null>(null)
+    
+console.log(currentQuestions);
 
     useEffect(() => {
         
@@ -52,15 +57,29 @@ function Mapbox(props: PropsForMapbox) {
         map.on('click', (e) => {
             setClickLat(e.lngLat.lat)
             setClickLng(e.lngLat.lng)
+            if (questionRef.current) {
+                questionRef.current.remove()
+            }
+    
             questionRef.current = new mapboxgl.Marker({color: '#cc8257'}).setLngLat([e.lngLat.lng, e.lngLat.lat]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h3>hej<h3>')).addTo(map);
         })
-      }, [lat, lng, zoom, props.setLat, props.setLng, setZoom]);
+        console.log(currentQuestions);
+        if (currentQuestions) {
+            currentQuestions.forEach((question: any) => {
+                const lng = +question.location.longitude
+                const lat = +question.location.latitude
+                activeQuestionRef.current = new mapboxgl.Marker({color: '#cc8257'}).setLngLat([lng, lat]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h3>hej<h3>')).addTo(map);
+            })
+        }
+        
+        
+      }, [lat, lng, zoom, props.setLat, props.setLng, setZoom, currentQuestions]);
 
       
     return (
         <div>
             {lat && lng && <div ref={mapContainer} className="map-container" /> }
-            <AddQuestionComp quizName={ quizName } lat={ clickLat } lng={ clickLng }/>
+            <AddQuestionComp quizName={ quizName } lat={ clickLat } lng={ clickLng } setCurrentQuestions={ setCurrentQuestions }/>
         </div>
     )
 }
