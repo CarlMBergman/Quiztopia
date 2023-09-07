@@ -1,4 +1,4 @@
-import './Logout.scss'
+import './LogOut.scss'
 import { useNavigate } from 'react-router'
 import logout from '../../assets/purplelogout.svg'
 
