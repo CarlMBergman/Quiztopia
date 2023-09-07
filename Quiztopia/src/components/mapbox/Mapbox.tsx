@@ -21,7 +21,6 @@ function Mapbox(props: PropsForMapbox) {
     const [clickLng, setClickLng] = useState<number>(0)
     const [currentQuestions, setCurrentQuestions] = useState<Question[]>()
     const questionRef = useRef<mapboxgl.Marker | null>(null)
-    const activeQuestionRef = useRef<mapboxgl.Marker | null>(null)
     
 console.log(currentQuestions);
 
@@ -78,7 +77,7 @@ console.log(currentQuestions);
                 if(!mapRef.current) return
                 const lng = +question.location.longitude
                 const lat = +question.location.latitude
-                /*activeQuestionRef.current = */new mapboxgl.Marker({color: '#cc8257'}).setLngLat([lng, lat]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h3>hej<h3>')).addTo(mapRef.current);
+                new mapboxgl.Marker({color: '#cc8257'}).setLngLat([lng, lat]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h3>hej<h3>')).addTo(mapRef.current);
             })
         }
         

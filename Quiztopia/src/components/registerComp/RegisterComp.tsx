@@ -22,7 +22,6 @@ function RegisterComp() {
     const [password, setPassword] = useState<string>('')
     const [secondPassword, setSecondPassword] = useState<string>('')
     const [errorMsg, setErrorMsg] = useState<string | null>()
-    const [token, setToken] = useState<string | null>()
     const navigate = useNavigate();
 
     
@@ -41,7 +40,6 @@ function RegisterComp() {
                     console.log(loginData);
                     
                     if (loginData.success) {
-                        setToken(loginData.token)
                         if (!loginData.token) return
                         navigate('/choosequiz')
                     }
