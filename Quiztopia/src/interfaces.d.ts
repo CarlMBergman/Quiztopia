@@ -1,5 +1,7 @@
 interface QuizArray {
+    success: boolean;
     quizzes: Quiz[];
+    message?: string;
 }
 
 interface Quiz {
@@ -66,4 +68,21 @@ interface AttributesAdd {
     username: string;
 }
 
-export { Quiz, PropsAddQuestionComp, PropsForMapbox, PropsForMapboxQuiz, QuizArray, Question, AddQuestionData }
+interface signupData {
+    success: boolean;
+    message?: string
+}
+
+interface loginData {
+    success: boolean;
+    token?: string;
+    message?: string;
+}
+
+interface QuizListProps {
+    quiz: Quiz;
+    own: boolean;
+    updateQuizzes?: () => void;
+}
+
+export { Quiz, PropsAddQuestionComp, PropsForMapbox, PropsForMapboxQuiz, QuizArray, Question, AddQuestionData, signupData, loginData, QuizListProps }

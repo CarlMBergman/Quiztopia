@@ -6,7 +6,7 @@ import getAllQuiz from '../../api/getAllQuiz'
 import LogOut from '../../components/logOut/LogOut'
 
 import QuizListComp from '../../components/QuizListComp/QuizListComp'
-import { Quiz } from '../../interfaces'
+import { Quiz, QuizArray } from '../../interfaces'
 
 interface newQuizData {
     success: boolean;
@@ -23,7 +23,7 @@ function ChooseQuiz() {
     const [errorMsg, setErrorMsg] = useState<string | null>()
     const [showQuizes, setShowQuizes] = useState<boolean>(false)
     const [showMyQuizes, setShowMyQuizes] = useState<boolean>(false)
-    const [allQuizes, setAllQuizes] = useState<any>()
+    const [allQuizes, setAllQuizes] = useState<JSX.Element[]>()
     let showLoginElems: boolean = location.state
     const token = localStorage.getItem('token')
 
@@ -46,7 +46,7 @@ function ChooseQuiz() {
         const quizes = await getAllQuiz()
         // 
         console.log(quizes);
-        const anotherQuiz = quizes.quizzes.map((quiz: Quiz) => {
+        const quizComponent = quizes.quizzes.map((quiz: Quiz) => {
             const key = quiz.questions[0].location.latitude + quiz.questions[0].location.longitude + quiz.quizId + quiz.userId
             return <QuizListComp quiz={ quiz } own={ false } key={key}/>
         })
@@ -54,7 +54,7 @@ function ChooseQuiz() {
         
         setShowMyQuizes(false)
         setShowQuizes(true)
-        setAllQuizes(anotherQuiz)
+        setAllQuizes(quizComponent)
     }
 
     async function handleShowMyQuizes() {

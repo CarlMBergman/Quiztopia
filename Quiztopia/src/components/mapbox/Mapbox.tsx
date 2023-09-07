@@ -5,7 +5,6 @@ import mapboxgl, { Map as MapGl } from 'mapbox-gl';
 import AddQuestionComp from '../addQuestionComp/AddQuestionComp';
 import { PropsForMapbox, Question } from '../../interfaces';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN_KEY as string
-// import getOneQuiz from '../../api/getOneQuiz';
 
 
 
@@ -21,8 +20,7 @@ function Mapbox(props: PropsForMapbox) {
     const [clickLng, setClickLng] = useState<number>(0)
     const [currentQuestions, setCurrentQuestions] = useState<Question[]>()
     const questionRef = useRef<mapboxgl.Marker | null>(null)
-    
-console.log(currentQuestions);
+
 
     useEffect(() => {
         
@@ -46,7 +44,7 @@ console.log(currentQuestions);
             interface Position {
                 lng: number,
                 lat: number
-              }
+            }
                 const position: Position = map.getCenter();
                 props.setLat(Number(position.lat.toFixed(4)));
                 props.setLng(Number(position.lng.toFixed(4)));
@@ -60,12 +58,8 @@ console.log(currentQuestions);
                 questionRef.current.remove()
             }
     
-            questionRef.current = new mapboxgl.Marker({color: '#cc8257'}).setLngLat([e.lngLat.lng, e.lngLat.lat]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h3>hej<h3>')).addTo(map);
+            questionRef.current = new mapboxgl.Marker({color: '#cc8257'}).setLngLat([e.lngLat.lng, e.lngLat.lat]).setPopup(new mapboxgl.Popup({ offset: 25 })).addTo(map);
         })
-
-
-        console.log(currentQuestions);
-        
         
         
       }, [lat, lng, zoom, currentQuestions]);
@@ -73,7 +67,7 @@ console.log(currentQuestions);
       useEffect(() => {
         console.log(currentQuestions);
         if (currentQuestions) {
-            currentQuestions.forEach((question: any) => {
+            currentQuestions.forEach((question: Question) => {
                 if(!mapRef.current) return
                 const lng = +question.location.longitude
                 const lat = +question.location.latitude

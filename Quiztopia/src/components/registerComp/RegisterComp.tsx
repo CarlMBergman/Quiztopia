@@ -5,17 +5,9 @@ import register from '../../api/register'
 import login from '../../api/login'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { signupData, loginData } from '../../interfaces'
 
-interface signupData {
-    success: boolean;
-    message?: string
-}
 
-interface loginData {
-    success: boolean;
-    token?: string;
-    message?: string;
-}
 
 function RegisterComp() {
     const [username, setUsername] = useState<string>('')

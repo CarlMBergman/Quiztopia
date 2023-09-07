@@ -1,17 +1,11 @@
 import removeQuiz from '../../api/removeQuiz';
 import './QuizListComp.scss'
 import { useNavigate } from 'react-router';
-import { Quiz } from '../../interfaces';
-
-interface Props {
-    quiz: Quiz;
-    own: boolean;
-    updateQuizzes?: () => void;
-}
+import { Quiz, QuizListProps } from '../../interfaces';
 
 
 
-function QuizListComp(props: Props) {
+function QuizListComp(props: QuizListProps) {
     const navigate = useNavigate()
     const quiz: Quiz = props.quiz
     const isItANum = +quiz.questions[0].location.latitude
@@ -25,7 +19,7 @@ function QuizListComp(props: Props) {
         
     }
 
-    async function handleRemoveQuiz(props: Props) {
+    async function handleRemoveQuiz(props: QuizListProps) {
         await removeQuiz(props.quiz)
         if (props.updateQuizzes) {
             props.updateQuizzes()
