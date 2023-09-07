@@ -6,7 +6,7 @@ import getAllQuiz from '../../api/getAllQuiz'
 import LogOut from '../../components/logOut/LogOut'
 
 import QuizListComp from '../../components/QuizListComp/QuizListComp'
-import { Quiz, QuizArray } from '../../interfaces'
+import { Quiz } from '../../interfaces'
 
 interface newQuizData {
     success: boolean;
