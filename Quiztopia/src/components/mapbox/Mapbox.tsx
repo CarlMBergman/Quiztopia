@@ -63,17 +63,26 @@ console.log(currentQuestions);
     
             questionRef.current = new mapboxgl.Marker({color: '#cc8257'}).setLngLat([e.lngLat.lng, e.lngLat.lat]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h3>hej<h3>')).addTo(map);
         })
+
+
+        console.log(currentQuestions);
+        
+        
+        
+      }, [lat, lng, zoom, currentQuestions]);
+
+      useEffect(() => {
         console.log(currentQuestions);
         if (currentQuestions) {
             currentQuestions.forEach((question: any) => {
+                if(!mapRef.current) return
                 const lng = +question.location.longitude
                 const lat = +question.location.latitude
-                activeQuestionRef.current = new mapboxgl.Marker({color: '#cc8257'}).setLngLat([lng, lat]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h3>hej<h3>')).addTo(map);
+                /*activeQuestionRef.current = */new mapboxgl.Marker({color: '#cc8257'}).setLngLat([lng, lat]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h3>hej<h3>')).addTo(mapRef.current);
             })
         }
         
-        
-      }, [lat, lng, zoom, props.setLat, props.setLng, setZoom, currentQuestions]);
+      }, [currentQuestions])
 
       
     return (

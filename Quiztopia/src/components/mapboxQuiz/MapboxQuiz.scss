@@ -1,12 +1,14 @@
+@import '../../_variables.scss';
+
 .map-container {
     height: 400px;
     width: 90%;
 }
 
 .scene {
-  width: 60px;
-  height: 60px;
-  perspective: 500px;
+  width: 200px;
+  height: 100px;
+  perspective: 600px;
 }
 
 .card {
@@ -15,7 +17,10 @@
   position: relative;
   transition: transform 1s;
   transform-style: preserve-3d;
-    &.is-flipped {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    &:hover {
       transform: rotateY( 180deg );
     }
     &__face {
@@ -25,11 +30,22 @@
       backface-visibility: hidden;
     }
     &__question {
-      background-color: aquamarine;
-      color: rgb(255, 145, 0);
+      background-color: $main-color;
+      color: white;
+      font-size: 20px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     &__anwser {
-      background-color: bisque;
+      background-color: $secondary-color;
       transform: rotateY( 180deg );
+      color: white;
+      font-size: 20px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 }

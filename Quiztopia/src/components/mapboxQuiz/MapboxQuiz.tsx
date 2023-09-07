@@ -40,15 +40,17 @@ function MapboxQuiz(props: PropsForMapboxQuiz) {
             const lat = +question.location.latitude
             const lng = +question.location.longitude
             
+            
+            
             questionRef.current = new mapboxgl.Marker({color: '#cc8257'}).setLngLat([lng, lat]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(
                 
                 `
-                <div className='scene'>
-                    <div className='card'>
-                        <div className='card__face card__question'>
-                            <h3>${question.question}<h3>
+                <div class='scene'>
+                    <div class='card'>
+                        <div class='card__face card__question'>
+                            <p>${question.question}<p>
                         </div>
-                        <div className='card__face card__anwser'>
+                        <div class='card__face card__anwser'>
                             <p>${question.answer}<p/>
                         </div>
                     </div>
@@ -68,7 +70,7 @@ function MapboxQuiz(props: PropsForMapboxQuiz) {
                 props.setLng(Number(position.lng.toFixed(4)));
                 setZoom(map.getZoom());
         });
-    }, [lat, lng, zoom, props.setLat, props.setLng, setZoom])
+    }, [lat, lng, zoom])
     
 
     return (
