@@ -2,7 +2,7 @@ import removeQuiz from '../../api/removeQuiz';
 import './QuizListComp.scss'
 import { useNavigate } from 'react-router';
 import { Quiz, QuizListProps } from '../../interfaces';
-
+//test
 
 
 function QuizListComp(props: QuizListProps) {
