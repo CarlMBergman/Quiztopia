@@ -13,7 +13,7 @@ function LoginComp() {
         if (!username || !password) {
             setErrorMsg('Please enter username and password!')
         } else {
-            const loginData = await login(username, password)
+            await login(username, password)
             navigate('/choosequiz', { state: true })
         }
         
