@@ -65,7 +65,6 @@ function Mapbox(props: PropsForMapbox) {
       }, [lat, lng, zoom, currentQuestions]);
 
       useEffect(() => {
-        console.log(currentQuestions);
         if (currentQuestions) {
             currentQuestions.forEach((question: Question) => {
                 if(!mapRef.current) return

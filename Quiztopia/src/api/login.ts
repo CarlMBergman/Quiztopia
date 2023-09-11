@@ -11,7 +11,6 @@ async function login(username: string, password: string) {
     })
     const dataLogin = await response.json()
     
-    console.log('login', dataLogin);
     localStorage.setItem('token', dataLogin.token)
     localStorage.setItem('username', username)
     

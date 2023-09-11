@@ -14,7 +14,6 @@ function LoginComp() {
             setErrorMsg('Please enter username and password!')
         } else {
             const loginData = await login(username, password)
-            console.log(loginData);
             navigate('/choosequiz', { state: true })
         }
         

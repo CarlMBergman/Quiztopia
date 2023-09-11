@@ -2,19 +2,25 @@ import removeQuiz from '../../api/removeQuiz';
 import './QuizListComp.scss'
 import { useNavigate } from 'react-router';
 import { Quiz, QuizListProps } from '../../interfaces';
-//test
 
 
 function QuizListComp(props: QuizListProps) {
+    
     const navigate = useNavigate()
     const quiz: Quiz = props.quiz
-    const isItANum = +quiz.questions[0].location.latitude
+    
 
     function handleQuiz() {
-        if (isNaN(isItANum)) {
-            window.alert('nej!!')
-        } else {
-            navigate('/quiz', { state: quiz })
+        if (quiz.questions[0].location.latitude) {
+            const isItANum = +quiz.questions[0].location.latitude
+            if (isNaN(isItANum)) {
+                window.alert('nej!!')
+            } else {
+                navigate('/quiz', { state: quiz })
+            }
+        }
+        else {
+            alert('error')
         }
         
     }

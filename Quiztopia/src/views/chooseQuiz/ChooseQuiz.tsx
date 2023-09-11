@@ -44,13 +44,10 @@ function ChooseQuiz() {
     
     async function handleShowQuizes() {
         const quizes = await getAllQuiz()
-        // 
-        console.log(quizes);
-        const quizComponent = quizes.quizzes.map((quiz: Quiz) => {
-            const key = quiz.questions[0].location.latitude + quiz.questions[0].location.longitude + quiz.quizId + quiz.userId
-            return <QuizListComp quiz={ quiz } own={ false } key={key}/>
+        const quizComponent = quizes.quizzes.map((quiz: Quiz, index) => {
+                return <QuizListComp quiz={ quiz } own={ false } key={ index }/>
+            
         })
-        console.log(quizes);
         
         setShowMyQuizes(false)
         setShowQuizes(true)
@@ -60,7 +57,6 @@ function ChooseQuiz() {
     async function handleShowMyQuizes() {
         const quizes = await getAllQuiz()
         
-        console.log(quizes);
         const username = localStorage.getItem('username')
         const myQuizes = quizes.quizzes.filter((quiz: Quiz) => {
             if (quiz.username === username) {

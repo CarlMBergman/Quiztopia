@@ -6,7 +6,6 @@ async function getAllQuiz() {
 
     const response = await fetch(ALLQUIZ_URL)
     const data: QuizArray = await response.json()
-    console.log(data);
     
     return data
 }
